@@ -1,7 +1,7 @@
 var dds = document.getElementsByTagName('dd');
 
 var addFaceInfo = function() {
-    var regexp = /^声[ \-：:]*(.+)[、,]*$/;
+    var regexp = /^声[ \-：:]*(.+)[、,]*.*$/;
     return function( dd ) {
 	var xhr = new XMLHttpRequest();
 	if ( regexp.test( dd.innerText ) ) {
