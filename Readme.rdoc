@@ -1,0 +1,10 @@
+= Wikipedia Voice Actor Face
+== What's this?
+日本語 Wikipedia 記事上の声優名の横に声優さん画像を展開する Chrome Extension です。アニメ関連記事の登場人物一覧の項目で使います。
+画像の取得に Google AJAX Image Search API を利用しています。
+
+頑張って声優さんの顔を覚えましょう。
+
+== Usage
+[crxmakeのインストール] $ gem install crxmake
+[crxファイルの作成] $ rake
