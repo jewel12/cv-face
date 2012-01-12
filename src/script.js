@@ -15,7 +15,7 @@
 		 }
 	     }
 
-	     function appendFace() {
+	     function appendFace( query ) {
 		 xhr.open( 'GET', 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=1&imgtype=face&q=声優 ' + query, true );
 		 xhr.onreadystatechange = parseAndAddInfo;
 		 xhr.send();
