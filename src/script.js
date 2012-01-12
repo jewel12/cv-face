@@ -1,27 +1,29 @@
 (function () {
      var addFaceInfo = function () {
-	 var regexp = /^声[ \-：:]*(.+)[、,\(\)]*.*$/;
+	 var regexp = /^声[ \-：:]*([^、,（）\(\)]+)/;
+
 	 return function ( dd ) {
-	     function appendFace() {
+	     var xhr = new XMLHttpRequest();
+
+	     function parseAndAddInfo() {
 		 if( xhr.readyState == 4 ) {
 		     var resp = JSON.parse(xhr.responseText),
-		     image_url = resp.responseData.results[0].tbUrl,
+		     image_url = resp.responseData.results[0].tbUrl;
 		     image = document.createElement( 'img' );
 		     image.src = image_url;
 		     dd.appendChild( image );
 		 }
 	     }
 
-	     function getImageUrl( query, callback ) {
+	     function appendFace() {
 		 xhr.open( 'GET', 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=1&imgtype=face&q=声優 ' + query, true );
-		 xhr.onreadystatechange = callback;
+		 xhr.onreadystatechange = parseAndAddInfo;
 		 xhr.send();
 	     }
 
-	     var xhr = new XMLHttpRequest();
 	     if ( regexp.test( dd.innerText ) ) {
-		 console.log( RegExp.$1 );
-		 getImageUrl( RegExp.$1, appendFace );
+		 if (RegExp.$1 === ' ') { return; } // Return if the query isn't a name.
+		 appendFace( RegExp.$1 );
 	     }
 	 };
      }();
