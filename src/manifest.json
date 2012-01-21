@@ -6,7 +6,7 @@
             "matches": [
 		"http://ja.wikipedia.org/wiki/*"
             ],
-            "js": ["script.js"],
+            "js": ["script.user.js"],
             "run_at": "document_end"
         }
     ],
