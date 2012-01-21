@@ -31,7 +31,7 @@
 				onload: parseAndAddInfo
 			});
 		} catch(err) {
-		alert(query);
+		// alert(query);
 			 xhr.open( 'GET', url, true );
 			 xhr.onreadystatechange = function() {parseAndAddInfo(xhr);};
 			 xhr.send();
