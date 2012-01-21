@@ -24,15 +24,16 @@
 
 	     function appendFace( query ) {
 		 url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=1&imgtype=face&q=声優 ' + query;
-		 if(GM_xmlhttpRequest) {
+		 try {
 			GM_xmlhttpRequest({
 				method: 'GET',
 				url: url,
 				onload: parseAndAddInfo
 			});
-		} else {
+		} catch(err) {
+		alert(query);
 			 xhr.open( 'GET', url, true );
-			 xhr.onreadystatechange = parseAndAddInfo;
+			 xhr.onreadystatechange = function() {parseAndAddInfo(xhr);};
 			 xhr.send();
 		}
 	     }
