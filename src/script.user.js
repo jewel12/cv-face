@@ -8,6 +8,7 @@
 (function () {
      var addFaceInfo = function () {
 	 var regexp = /^声[ \-：:]*([^、,（）\(\)]+)/;
+	 var url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=1&imgtype=face&q=声優 ';
 
 	 return function ( dd ) {
 	     var xhr = new XMLHttpRequest();
@@ -22,22 +23,27 @@
 		 }
 	     }
 
-	     function appendFace( query ) {
-		 url = 'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=1&imgtype=face&q=声優 ' + query;
-		 try {
-			GM_xmlhttpRequest({
-				method: 'GET',
-				url: url,
-				onload: parseAndAddInfo
-			});
-		} catch(err) {
-		// alert(query);
-			 xhr.open( 'GET', url, true );
+	     var appendFace = function () {
+		 if ( typeof GM_xmlhttpRequest == "function" ) {
+		     // Firefox
+		     return function ( query ) {
+			 GM_xmlhttpRequest({
+					       method: 'GET',
+					       url: url + query,
+					       onload: parseAndAddInfo
+					   });
+		     };
+		 } else {
+		     // Chrome
+		     return function ( query ) {
+			 xhr.open( 'GET', url + query, true );
 			 xhr.onreadystatechange = function() {parseAndAddInfo(xhr);};
 			 xhr.send();
-		}
-	     }
-	     
+		     };
+		 }
+	     }();
+
+
 	     if ( regexp.test( dd.textContent ) ) {
 		 if (RegExp.$1 === ' ') { return; } // Return if the query isn't a name.
 		 appendFace( RegExp.$1 );
